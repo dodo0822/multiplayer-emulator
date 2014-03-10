@@ -20,27 +20,31 @@ def findwindow():
 
     return n
 
-def sendkey(k, n):
-    if k == "A" or k == "a":
+def sendkey(key, n):
+    k = ""
+
+    key = key.lower().strip()
+    print "key=" + key
+    if key == "a":
         k = "z"
-
-    if k == "B" or k == "b":
+    elif key == "b":
         k = "x"
-
-    if k == "down":
+    elif key == "down":
         k = "Down"
-
-    if k == "up":
+    elif key == "up":
         k = "Up"
-
-    if k == "left":
+    elif key == "left":
         k = "Left"
-
-    if k == "right":
+    elif key == "right":
         k = "Right"
-
-    if k == "start":
+    elif key == "start":
         k = "Return"
+    else:
+        print "Unknown key"
+        return
+
+    print "Press " + k
+
     call(["xdotool", "windowactivate", n])
     sleep(0.1)
     call(["xdotool", "keydown", k])

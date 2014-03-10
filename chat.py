@@ -23,4 +23,6 @@ while True:
     tokens = line.split(':')
     if len(tokens) > 2:
         if tokens[2] != "":
-            print tokens[2].split('\n')[0]
+            c = tokens[2].split('\n')[0]
+            print "Send to " + window_id + ": " + c
+            sendkey.sendkey(c, window_id)
