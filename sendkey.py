@@ -2,20 +2,25 @@ from subprocess import call
 from subprocess import check_output
 from time import sleep
 
-wm_output = check_output(["wmctrl", "-lp"])
+def findwindow():
+    wm_output = check_output(["wmctrl", "-lp"])
+    
+    n = ""
+    
+    for line in wm_output.split('\n'):
+        if line != '':
+            if "VBA-M" in line:
+                print int(line.split(' ')[0][2:], 16)
+                n = str(int(line.split(' ')[0][2:], 16))
 
-n = ""
+    if n != "":
+        print "VBA-M window ID# => " + n
+    else:
+        print "Cannot find VBA-M window!"
 
-for line in wm_output.split('\n'):
-    if line != '':
-        if "VBA-M" in line:
-            print int(line.split(' ')[0][2:], 16)
-            n = str(int(line.split(' ')[0][2:], 16))
+    return n
 
-print "VBA-M window ID# => " + n
-
-while True:
-    k = raw_input("Key: ")
+def sendkey(k, n):
     if k == "A" or k == "a":
         k = "z"
 

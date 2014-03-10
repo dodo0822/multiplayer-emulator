@@ -1,4 +1,7 @@
 import socket
+import sendkey
+
+window_id = sendkey.findwindow()
 
 nick = "dodo0822"
 channel = "#dodo0822"
@@ -17,4 +20,7 @@ irc.send("JOIN " + channel + "\n")
 
 while True:
     line = irc.recv(1024)
-    print line
+    tokens = line.split(':')
+    if len(tokens) > 2:
+        if tokens[2] != "":
+            print tokens[2].split('\n')[0]
