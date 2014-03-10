@@ -20,11 +20,26 @@ def findwindow():
 
     return n
 
+def isnumber(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
 def sendkey(key, n):
     k = ""
 
-    key = key.lower().strip()
-    print "key=" + key
+    tokens = key.lower().strip().split('*')
+    times = 1
+    key = tokens[0]
+
+    if len(tokens) > 1:
+        if isnumber(tokens[1]):
+            times = int(tokens[1])
+            if times > 10 or times < 1:
+                times = 1
+    
     if key == "a":
         k = "z"
     elif key == "b":
@@ -41,13 +56,17 @@ def sendkey(key, n):
         k = "Return"
     else:
         print "Unknown key"
-        return
+        return False
 
-    print "Press " + k
+    print "Press " + k + " for " + str(times) + " time(s)"
+    
+    for i in range(0, times):
+        call(["xdotool", "windowactivate", n])
+        sleep(0.1)
+        call(["xdotool", "keydown", k])
+        sleep(0.25)
+        call(["xdotool", "keyup", k])
+        if times > 1:
+            sleep(0.1)
 
-    call(["xdotool", "windowactivate", n])
-    sleep(0.1)
-    call(["xdotool", "keydown", k])
-    sleep(0.25)
-    call(["xdotool", "keyup", k])
-
+    return True
